@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Ritesh Jewellers · Designs</title>
+  <meta name="description" content="Handcrafted gold jewellery designs by Ritesh Jewellers — necklaces, earrings and bridal sets." />
+  <meta name="theme-color" content="#0b0907" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="apple-mobile-web-app-title" content="Ritesh Jewellers" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="format-detection" content="telephone=no" />
+  <!-- Link preview when shared on WhatsApp / Instagram / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Ritesh Jewellers · Gold Designs" />
+  <meta property="og:description" content="Handcrafted gold jewellery — explore the full collection." />
+  <meta property="og:image" content="/images/design-076.jpg" />
+  <meta property="og:url" content="/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 4 26 13 16 28 6 13Z' fill='%23d4af37'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0907;
+      --surface: #16120d;
+      --line: rgba(212, 175, 55, 0.18);
+      --gold: #d4af37;
+      --gold-soft: #f1dc9c;
+      --gold-deep: #9c7a22;
+      --text: #f5ecd9;
+      --muted: #a59779;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --sat: env(safe-area-inset-top, 0px);
+      --sab: env(safe-area-inset-bottom, 0px);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; background: var(--bg); }
+    html.locked, html.locked body { overflow: hidden; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: "Jost", system-ui, sans-serif; font-weight: 300;
+      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+    ::selection { background: var(--gold); color: var(--bg); }
+    button { font: inherit; touch-action: manipulation; }
+
+    /* film grain */
+    body::after {
+      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .045;
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+
+    /* ---------- Intro loader ---------- */
+    .loader {
+      position: fixed; inset: 0; z-index: 200; background: var(--bg);
+      display: grid; place-items: center;
+      transition: opacity .8s var(--ease), visibility .8s;
+    }
+    .loader.done { opacity: 0; visibility: hidden; }
+    .loader svg { width: 60px; height: 60px; color: var(--gold); }
+    .loader path { stroke-dasharray: 120; stroke-dashoffset: 120; animation: draw 1.2s var(--ease) forwards; }
+    .loader path + path { animation-delay: .3s; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+
+    /* ---------- Scroll progress + nav ---------- */
+    .progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 100%; z-index: 60;
+      background: linear-gradient(90deg, var(--gold-deep), var(--gold-soft), var(--gold));
+      transform-origin: 0 50%; transform: scaleX(0);
+    }
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: calc(12px + var(--sat)) max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
+      background: rgba(11, 9, 7, .72);
+      backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border-bottom: 1px solid var(--line);
+      transform: translateY(-100%); transition: transform .5s var(--ease);
+    }
+    nav.show { transform: none; }
+    nav .logo { font-family: "Cormorant Garamond", serif; font-size: 1.3rem; font-weight: 600; letter-spacing: .03em; color: var(--gold-soft); text-decoration: none; }
+    nav .pill { font-size: .66rem; letter-spacing: .22em; color: var(--muted); border: 1px solid var(--line); padding: 6px 12px; border-radius: 999px; }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative; min-height: 100vh; min-height: 100svh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: calc(80px + var(--sat)) 20px 110px; overflow: hidden; isolation: isolate;
+    }
+    #sparkles { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+    .orb { position: absolute; border-radius: 50%; z-index: -2; opacity: .55; animation: float 14s ease-in-out infinite; }
+    .orb.a { width: 90vmax; height: 90vmax; background: radial-gradient(circle, rgba(212,175,55,.22), transparent 60%); top: -45vmax; left: -35vmax; }
+    .orb.b { width: 80vmax; height: 80vmax; background: radial-gradient(circle, rgba(176,98,40,.18), transparent 60%); bottom: -40vmax; right: -35vmax; animation-delay: -7s; }
+    @keyframes float { 50% { transform: translate(4vmax, 3vmax) scale(1.06); } }
+
+    .ring { width: clamp(64px, 12vw, 96px); aspect-ratio: 1; margin-bottom: 26px; color: var(--gold); }
+    .ring svg { width: 100%; height: 100%; animation: spin 30s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .eyebrow { font-size: .7rem; letter-spacing: .5em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; padding-left: .5em; }
+    h1 {
+      font-family: "Cormorant Garamond", serif; font-weight: 600;
+      font-size: clamp(3.6rem, 11vw, 8rem); line-height: .92; letter-spacing: .01em;
+    }
+    h1 .word { display: inline-block; overflow: hidden; vertical-align: bottom; padding: 0 .04em .1em; }
+    h1 .word span {
+      display: inline-block; transform: translateY(110%);
+      background: linear-gradient(110deg, var(--gold-deep) 0%, var(--gold) 25%, #fff6d6 45%, var(--gold) 60%, var(--gold-deep) 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: shimmer 6s linear infinite;
+    }
+    h1 em { font-style: italic; font-weight: 400; }
+    @keyframes shimmer { from { background-position: 100% 0; } to { background-position: -150% 0; } }
+    .ready h1 .word span { transform: none; transition: transform 1.2s var(--ease); }
+    .ready h1 .word:nth-child(2) span { transition-delay: .12s; }
+
+    .sub { margin-top: 24px; max-width: 34ch; font-size: clamp(1rem, 2vw, 1.1rem); color: var(--muted); line-height: 1.7; }
+    .fade-up { opacity: 0; transform: translateY(18px); }
+    .ready .fade-up { opacity: 1; transform: none; transition: opacity 1s var(--ease), transform 1s var(--ease); }
+    .ready .d1 { transition-delay: .35s; } .ready .d2 { transition-delay: .5s; } .ready .d3 { transition-delay: .65s; } .ready .d4 { transition-delay: .9s; }
+
+    .cta {
+      margin-top: 34px; display: inline-flex; align-items: center; gap: 12px;
+      padding: 15px 28px; border-radius: 999px; text-decoration: none;
+      font-size: .78rem; letter-spacing: .28em; font-weight: 400; color: var(--bg);
+      background: linear-gradient(110deg, var(--gold-deep), var(--gold) 30%, var(--gold-soft) 50%, var(--gold) 70%, var(--gold-deep));
+      background-size: 220% 100%; animation: shimmer 5s linear infinite;
+      box-shadow: 0 10px 40px -10px rgba(212,175,55,.6);
+      transition: transform .3s var(--ease);
+    }
+    .cta:active { transform: scale(.96); }
+    .cta i { font-style: normal; display: inline-block; animation: nudge 1.8s var(--ease) infinite; }
+    @keyframes nudge { 50% { transform: translateY(3px); } }
+
+    .stats { display: flex; gap: clamp(28px, 7vw, 64px); margin-top: 40px; }
+    .stat b { display: block; font-family: "Cormorant Garamond", serif; font-size: 2.1rem; font-weight: 600; color: var(--gold-soft); line-height: 1.1; }
+    .stat small { font-size: .62rem; letter-spacing: .3em; color: var(--muted); text-transform: uppercase; }
+
+    .scroll-cue {
+      position: absolute; bottom: calc(24px + var(--sab)); left: 50%; transform: translateX(-50%);
+      width: 1px; height: 46px; background: linear-gradient(var(--gold), transparent); overflow: hidden;
+    }
+    .scroll-cue::after { content: ""; position: absolute; inset: 0; background: var(--gold-soft); animation: drip 2s var(--ease) infinite; }
+    @keyframes drip { from { transform: translateY(-100%); } to { transform: translateY(100%); } }
+
+    /* ---------- Marquee ---------- */
+    .marquee { border-block: 1px solid var(--line); overflow: hidden; padding: 16px 0; background: rgba(212,175,55,.03); }
+    .marquee div { display: flex; width: max-content; animation: slide 36s linear infinite; }
+    .marquee span {
+      font-family: "Cormorant Garamond", serif; font-style: italic; font-size: clamp(1.25rem, 3vw, 1.8rem);
+      color: var(--gold-soft); padding: 0 22px; white-space: nowrap; display: flex; align-items: center; gap: 44px;
+    }
+    .marquee span::after { content: "✦"; font-style: normal; font-size: .75rem; color: var(--gold); }
+    @keyframes slide { to { transform: translateX(-50%); } }
+
+    /* ---------- Gallery ---------- */
+    main { max-width: 1440px; margin: 0 auto; padding: clamp(44px, 8vw, 96px) max(12px, env(safe-area-inset-left)) 80px; scroll-margin-top: 40px; }
+    .section-head { text-align: center; margin-bottom: clamp(26px, 6vw, 56px); }
+    .section-head h2 { font-family: "Cormorant Garamond", serif; font-weight: 400; font-size: clamp(2.3rem, 5vw, 3.2rem); line-height: 1.1; }
+    .section-head h2 em { color: var(--gold); }
+    .section-head p { margin-top: 10px; font-size: .68rem; letter-spacing: .35em; color: var(--muted); text-transform: uppercase; }
+
+    .grid { columns: 4 250px; column-gap: 18px; }
+    .card {
+      break-inside: avoid; margin-bottom: 18px;
+      display: block; width: 100%; padding: 0; border: 0; text-align: left;
+      border-radius: 14px; background: var(--surface);
+      cursor: pointer; position: relative; overflow: hidden;
+      opacity: 0; transform: translateY(40px) scale(.96); filter: blur(6px);
+      transition: opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease), box-shadow .5s;
+      -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+    }
+    .card.in { opacity: 1; transform: none; filter: none; }
+    .card::before { /* gold gradient border */
+      content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; z-index: 3; pointer-events: none;
+      background: linear-gradient(135deg, rgba(241,220,156,.55), rgba(212,175,55,.08) 40%, rgba(212,175,55,.08) 60%, rgba(241,220,156,.4));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+    }
+    .card::after { /* sheen sweep */
+      content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: linear-gradient(115deg, transparent 30%, rgba(255,240,200,.3) 48%, transparent 66%);
+      transform: translateX(-120%);
+    }
+    .card.in::after { animation: sheen 1.4s var(--ease) .3s; }
+    .card:hover::after { animation: sheen 1s var(--ease); }
+    @keyframes sheen { to { transform: translateX(120%); } }
+    .card .media {
+      position: relative; overflow: hidden; border-radius: inherit;
+      background: linear-gradient(110deg, #16120d 30%, #261e14 50%, #16120d 70%); background-size: 200% 100%;
+      animation: skeleton 1.6s linear infinite;
+    }
+    .card .media.loaded { animation: none; background: var(--surface); }
+    @keyframes skeleton { to { background-position: -200% 0; } }
+    .card img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+      opacity: 0; transform: scale(1.08);
+      transition: opacity .8s ease, transform 1.2s var(--ease);
+    }
+    .card .media.loaded img { opacity: 1; transform: scale(1); }
+    .card:hover .media.loaded img { transform: scale(1.07); }
+    .card .tag {
+      position: absolute; left: 8px; bottom: 8px; z-index: 1;
+      font-size: .62rem; letter-spacing: .14em; padding: 4px 9px; border-radius: 999px;
+      background: rgba(11,9,7,.62); color: var(--gold-soft);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(241,220,156,.18);
+      transition: opacity .4s;
+    }
+    .card .overlay {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      display: flex; align-items: flex-end; justify-content: space-between; padding: 14px;
+      background: linear-gradient(to top, rgba(11,9,7,.85), transparent 45%);
+      opacity: 0; transition: opacity .5s var(--ease);
+    }
+    .card .overlay span { font-family: "Cormorant Garamond", serif; font-size: 1.15rem; color: var(--gold-soft); transform: translateY(10px); transition: transform .5s var(--ease); }
+    .card .overlay i {
+      width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(241,220,156,.5);
+      display: grid; place-items: center; color: var(--gold-soft); font-style: normal;
+      transform: scale(.6) rotate(-45deg); transition: transform .5s var(--ease);
+    }
+    @media (hover: hover) {
+      .card:hover .overlay, .card:focus-visible .overlay { opacity: 1; }
+      .card:hover .tag { opacity: 0; }
+      .card:hover .overlay span, .card:hover .overlay i { transform: none; }
+      .card:hover { box-shadow: 0 24px 60px -20px rgba(212,175,55,.35); }
+    }
+    .card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    .card.press { transform: scale(.965) !important; transition: transform .2s var(--ease) !important; }
+
+    /* ---------- Footer ---------- */
+    footer { text-align: center; padding: 60px 16px calc(52px + var(--sab)); border-top: 1px solid var(--line); }
+    footer .big {
+      font-family: "Cormorant Garamond", serif; font-size: clamp(2.6rem, 8vw, 5rem); font-weight: 600; line-height: 1;
+      background: linear-gradient(180deg, var(--gold-soft), var(--gold-deep)); -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    footer p { margin-top: 16px; color: var(--muted); font-size: .68rem; letter-spacing: .25em; }
+    .to-top {
+      position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: calc(16px + var(--sab)); z-index: 40;
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 1px solid var(--line); background: rgba(22,18,13,.82);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: var(--gold-soft);
+      font-size: 1.1rem; cursor: pointer; opacity: 0; transform: translateY(20px) scale(.8); pointer-events: none;
+      transition: opacity .4s var(--ease), transform .4s var(--ease), background .3s, color .3s;
+    }
+    .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+    .to-top:hover, .to-top:active { background: var(--gold); color: var(--bg); }
+
+    /* ---------- Lightbox ---------- */
+    .lb { position: fixed; inset: 0; z-index: 80; visibility: hidden; touch-action: none; }
+    .lb.open { visibility: visible; }
+    .lb .backdrop {
+      position: absolute; inset: 0; background: rgba(6,5,4,.94);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      opacity: 0; transition: opacity .45s var(--ease);
+    }
+    .lb.open .backdrop { opacity: 1; }
+    .lb .stage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .lb img {
+      display: block; max-width: min(92vw, 1100px); max-height: calc(100dvh - 190px);
+      border-radius: 12px; box-shadow: 0 30px 100px rgba(0,0,0,.7), 0 0 0 1px var(--line);
+      -webkit-user-select: none; user-select: none; -webkit-user-drag: none; -webkit-touch-callout: none;
+      opacity: 0; transform: scale(.9); will-change: transform;
+      transition: transform .5s var(--ease), opacity .4s var(--ease);
+    }
+    .lb.open img.shown { opacity: 1; transform: none; }
+    .lb .bar {
+      position: absolute; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+      opacity: 0; transition: opacity .4s var(--ease) .1s; pointer-events: none;
+    }
+    .lb.open .bar { opacity: 1; }
+    .lb .bar > * { pointer-events: auto; }
+    .lb .top { top: calc(14px + var(--sat)); }
+    .lb .bottom { bottom: calc(18px + var(--sab)); }
+    .lb .counter { font-size: .72rem; letter-spacing: .3em; color: var(--muted); }
+    .lb .title { font-family: "Cormorant Garamond", serif; font-size: 1.35rem; color: var(--gold-soft); text-align: center; flex: 1; }
+    .lb button {
+      background: rgba(22,18,13,.75); border: 1px solid var(--line); color: var(--gold-soft);
+      width: 50px; height: 50px; border-radius: 50%; font-size: 1.25rem; cursor: pointer;
+      display: grid; place-items: center; flex: none;
+      transition: background .3s, color .3s, transform .3s var(--ease);
+    }
+    .lb button:hover { background: var(--gold); color: var(--bg); }
+    .lb button:active { transform: scale(.9); }
+    .lb .hint {
+      position: absolute; left: 50%; bottom: calc(92px + var(--sab)); translate: -50% 0;
+      font-size: .7rem; letter-spacing: .15em; color: var(--text); white-space: nowrap;
+      padding: 9px 16px; border-radius: 999px; background: rgba(22,18,13,.85); border: 1px solid var(--line);
+      opacity: 0; transition: opacity .5s; pointer-events: none;
+    }
+    .lb .hint.show { opacity: 1; }
+
+    /* ---------- Phones ---------- */
+    @media (max-width: 640px) {
+      .hero { padding: calc(64px + var(--sat)) 20px calc(90px + var(--sab)); }
+      .ring { margin-bottom: 20px; }
+      .eyebrow { font-size: .62rem; letter-spacing: .42em; }
+      h1 { font-size: clamp(3.4rem, 17vw, 5rem); }
+      .sub { margin-top: 18px; font-size: .98rem; }
+      .cta { margin-top: 28px; }
+      .stats { margin-top: 34px; }
+      .stat b { font-size: 1.8rem; }
+      .grid { columns: 2; column-gap: 10px; }
+      .card { margin-bottom: 10px; border-radius: 12px; filter: none; transform: translateY(28px) scale(.97); }
+      .card .overlay { display: none; }
+      .lb img { max-width: calc(100vw - 20px); max-height: calc(100dvh - 170px); border-radius: 10px; }
+      .lb .bottom .prev, .lb .bottom .next { width: 46px; height: 46px; }
+    }
+    @media (max-width: 640px) and (max-height: 700px) {
+      .ring { width: 54px; margin-bottom: 14px; }
+      .stats { display: none; }
+    }
+    @media (max-height: 560px) { .scroll-cue { display: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .card, .fade-up, h1 .word span { opacity: 1 !important; transform: none !important; filter: none !important; }
+      .card img { opacity: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="loader" id="loader" aria-hidden="true">
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1">
+      <path d="M16 3 27 12 16 29 5 12Z" /><path d="M5 12h22M11 12l5 17 5-17M11 12l5-9 5 9" />
+    </svg>
+  </div>
+
+  <div class="progress" id="progress"></div>
+  <nav id="nav">
+    <a class="logo" href="#top">Ritesh Jewellers</a>
+    <span class="pill" id="navCount"></span>
+  </nav>
+
+  <section class="hero" id="top">
+    <div class="orb a"></div><div class="orb b"></div>
+    <canvas id="sparkles"></canvas>
+
+    <div class="ring fade-up">
+      <svg viewBox="0 0 100 100" fill="none" stroke="currentColor">
+        <circle cx="50" cy="50" r="46" stroke-width=".6" stroke-dasharray="2 4" />
+        <circle cx="50" cy="50" r="38" stroke-width=".5" />
+        <path d="M50 30 62 42 50 70 38 42Z M38 42h24 M45 42l5 28 5-28 M45 42l5-12 5 12" stroke-width=".9" />
+      </svg>
+    </div>
+    <p class="eyebrow fade-up d1">Fine Gold Jewellery</p>
+    <h1><span class="word"><span>Ritesh</span></span> <span class="word"><span><em>Jewellers</em></span></span></h1>
+    <p class="sub fade-up d2">Timeless gold, shaped by hand. Necklaces, earrings and bridal sets crafted to be treasured.</p>
+    <a class="cta fade-up d3" href="#gallery">VIEW COLLECTION <i>↓</i></a>
+    <div class="stats fade-up d4">
+      <div class="stat"><b id="statDesigns">0</b><small>Designs</small></div>
+      <div class="stat"><b>✦</b><small>Handcrafted</small></div>
+      <div class="stat"><b>∞</b><small>Timeless</small></div>
+    </div>
+    <span class="scroll-cue" aria-hidden="true"></span>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div>
+      <span>Bridal Necklaces</span><span>Jhumkas</span><span>Chandbalis</span><span>Temple Jewellery</span><span>Handcrafted Gold</span><span>Heirloom Designs</span>
+      <span>Bridal Necklaces</span><span>Jhumkas</span><span>Chandbalis</span><span>Temple Jewellery</span><span>Handcrafted Gold</span><span>Heirloom Designs</span>
+    </div>
+  </div>
+
+  <main id="gallery">
+    <div class="section-head">
+      <h2>The <em>Collection</em></h2>
+      <p>Tap any design to view</p>
+    </div>
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <footer>
+    <div class="big">Ritesh Jewellers</div>
+    <p id="copy"></p>
+  </footer>
+
+  <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Design viewer">
+    <div class="backdrop"></div>
+    <div class="stage"><img alt="" draggable="false" /></div>
+    <div class="bar top">
+      <span class="counter"></span>
+      <button class="close" aria-label="Close">✕</button>
+    </div>
+    <div class="bar bottom">
+      <button class="prev" aria-label="Previous design">‹</button>
+      <span class="title"></span>
+      <button class="next" aria-label="Next design">›</button>
+    </div>
+    <div class="hint">Swipe to browse · Double-tap to zoom</div>
+  </div>
+
+  <script src="designs.js"></script>
+  <script>
+    const designs = (window.DESIGNS || []).map((d) => (typeof d === "string" ? { f: d, w: 3, h: 4 } : d));
+    const $ = (s, r = document) => r.querySelector(s);
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const isPhone = matchMedia("(max-width: 640px)").matches;
+    const pad = (n) => String(n).padStart(3, "0");
+    const src = (i) => "images/" + designs[i].f;
+
+    $("#copy").textContent = "© " + new Date().getFullYear() + " · ALL DESIGNS HANDCRAFTED";
+    $("#navCount").textContent = designs.length + " DESIGNS";
+
+    // ---- Intro: show as soon as fonts are ready (never wait on photos) ----
+    const t0 = performance.now();
+    Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 1500))]).then(() => {
+      setTimeout(() => {
+        $("#loader").classList.add("done");
+        document.body.classList.add("ready");
+        countUp($("#statDesigns"), designs.length);
+      }, reduce ? 0 : Math.max(0, 1000 - (performance.now() - t0)));
+    });
+    function countUp(el, target) {
+      if (reduce) { el.textContent = target; return; }
+      const start = performance.now() + 700, dur = 1500;
+      (function tick(t) {
+        const p = Math.max(0, Math.min((t - start) / dur, 1));
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick);
+      })(performance.now());
+    }
+
+    // ---- Gold sparkles in hero (pre-rendered glow sprite = smooth on phones) ----
+    (function sparkles() {
+      const c = $("#sparkles"), ctx = c.getContext("2d");
+      const sprite = document.createElement("canvas"); sprite.width = sprite.height = 32;
+      const s = sprite.getContext("2d"), g = s.createRadialGradient(16, 16, 0, 16, 16, 16);
+      g.addColorStop(0, "rgba(255,246,214,1)"); g.addColorStop(.25, "rgba(241,220,156,.8)"); g.addColorStop(1, "rgba(212,175,55,0)");
+      s.fillStyle = g; s.fillRect(0, 0, 32, 32);
+      let w, h, parts = [], running = true, lastW = 0;
+      function size() {
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        w = c.offsetWidth; h = c.offsetHeight;
+        c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (w === lastW && parts.length) return; // ignore mobile URL-bar resizes
+        lastW = w;
+        const n = Math.round(Math.max(28, Math.min(80, (w * h) / 13000)));
+        parts = Array.from({ length: n }, () => ({
+          x: Math.random() * w, y: Math.random() * h,
+          r: Math.random() * 1.5 + .4, vy: -(Math.random() * .3 + .06), vx: (Math.random() - .5) * .15,
+          ph: Math.random() * Math.PI * 2, sp: Math.random() * .03 + .01,
+        }));
+      }
+      function draw() {
+        if (!running) return;
+        ctx.clearRect(0, 0, w, h);
+        for (const p of parts) {
+          p.x += p.vx; p.y += p.vy; p.ph += p.sp;
+          if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
+          const a = (Math.sin(p.ph) + 1) / 2 * .85 + .1, d = p.r * 7;
+          ctx.globalAlpha = a; ctx.drawImage(sprite, p.x - d / 2, p.y - d / 2, d, d);
+          if (p.r > 1.5 && a > .8) {
+            ctx.strokeStyle = "rgba(255,246,214,.6)"; ctx.lineWidth = .6;
+            ctx.beginPath(); ctx.moveTo(p.x - 6, p.y); ctx.lineTo(p.x + 6, p.y); ctx.moveTo(p.x, p.y - 6); ctx.lineTo(p.x, p.y + 6); ctx.stroke();
+          }
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(draw);
+      }
+      size(); addEventListener("resize", size);
+      if (reduce) { draw(); running = false; return; }
+      new IntersectionObserver(([e]) => { const was = running; running = e.isIntersecting; if (running && !was) draw(); }).observe(c);
+      document.addEventListener("visibilitychange", () => { const was = running; running = !document.hidden; if (running && !was) draw(); });
+      draw();
+    })();
+
+    // ---- Build gallery ----
+    const grid = $("#grid");
+    let queue = [], flushing = false;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { queue.push(e.target); io.unobserve(e.target); } });
+      if (!flushing) flush();
+    }, { rootMargin: "0px 0px -40px 0px" });
+    function flush() { // reveal one by one for a smooth cascade
+      const card = queue.shift();
+      if (!card) { flushing = false; return; }
+      flushing = true; card.classList.add("in");
+      setTimeout(flush, queue.length > 6 ? 40 : 90);
+    }
+
+    designs.forEach((d, i) => {
+      const card = document.createElement("button");
+      card.className = "card";
+      card.setAttribute("aria-label", "View design " + (i + 1));
+      card.innerHTML = `<div class="media" style="aspect-ratio:${d.w}/${d.h}"><img alt="Jewellery design ${i + 1}" decoding="async" loading="${i < (isPhone ? 4 : 8) ? "eager" : "lazy"}"></div>
+        <span class="tag">No. ${pad(i + 1)}</span>
+        <div class="overlay"><span>Design No. ${pad(i + 1)}</span><i>↗</i></div>`;
+      const img = $("img", card), media = $(".media", card);
+      img.onload = () => media.classList.add("loaded");
+      img.src = src(i);
+      if (img.complete && img.naturalWidth) media.classList.add("loaded");
+      card.addEventListener("click", () => open(i));
+      // press feedback on touch
+      card.addEventListener("touchstart", () => card.classList.add("press"), { passive: true });
+      ["touchend", "touchcancel", "touchmove"].forEach((ev) => card.addEventListener(ev, () => card.classList.remove("press"), { passive: true }));
+      if (finePointer && !reduce) addTilt(card);
+      grid.appendChild(card);
+      io.observe(card);
+    });
+
+    function addTilt(card) {
+      card.addEventListener("pointermove", (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        card.style.transition = "transform .15s ease-out, box-shadow .5s";
+        card.style.transform = `perspective(900px) rotateX(${-y * 7}deg) rotateY(${x * 7}deg) translateY(-4px)`;
+      });
+      card.addEventListener("pointerleave", () => { card.style.transition = ""; card.style.transform = ""; });
+    }
+
+    // ---- Scroll effects ----
+    const nav = $("#nav"), prog = $("#progress"), toTop = $("#toTop");
+    let ticking = false;
+    addEventListener("scroll", () => {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(() => {
+        const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
+        prog.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+        nav.classList.toggle("show", y > innerHeight * .6);
+        toTop.classList.toggle("show", y > innerHeight * 1.5);
+        ticking = false;
+      });
+    }, { passive: true });
+    toTop.onclick = () => scrollTo({ top: 0, behavior: "smooth" });
+
+    // ---- Lightbox with swipe, swipe-down to close, pinch & double-tap zoom ----
+    const lb = $("#lb"), img = $(".stage img", lb), backdrop = $(".backdrop", lb), hint = $(".hint", lb);
+    let current = 0, busy = false;
+    let z = { s: 1, x: 0, y: 0 };            // zoom state
+    const setT = (x, y, s, anim) => {
+      img.style.transition = anim ? "transform .45s cubic-bezier(.22,1,.36,1), opacity .3s" : "none";
+      img.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${s})`;
+    };
+    function resetZoom(anim) { z = { s: 1, x: 0, y: 0 }; setT(0, 0, 1, anim); }
+
+    function fill(i) {
+      current = (i + designs.length) % designs.length;
+      img.src = src(current);
+      img.alt = "Jewellery design " + (current + 1);
+      $(".title", lb).textContent = "Design No. " + pad(current + 1);
+      $(".counter", lb).textContent = (current + 1) + " / " + designs.length;
+      [1, -1, 2].forEach((d) => { new Image().src = src((current + d + designs.length) % designs.length); });
+    }
+    function go(dir) {
+      if (busy) return;
+      if (reduce) { fill(current + dir); return; }
+      busy = true;
+      const w = innerWidth;
+      img.style.transition = "transform .28s cubic-bezier(.4,0,1,1), opacity .28s";
+      img.style.transform = `translate3d(${-dir * w * .6}px,0,0) scale(.92)`; img.style.opacity = "0";
+      setTimeout(() => {
+        fill(current + dir); z = { s: 1, x: 0, y: 0 };
+        img.style.transition = "none";
+        img.style.transform = `translate3d(${dir * w * .6}px,0,0) scale(.92)`;
+        const show = () => requestAnimationFrame(() => requestAnimationFrame(() => {
+          img.style.transition = "transform .5s cubic-bezier(.22,1,.36,1), opacity .4s";
+          img.style.transform = "translate3d(0,0,0) scale(1)"; img.style.opacity = "1";
+          setTimeout(() => (busy = false), 300);
+        }));
+        img.decode ? img.decode().then(show, show) : show();
+      }, 260);
+    }
+    function open(i) {
+      fill(i); resetZoom(false);
+      img.style.opacity = ""; img.style.transform = ""; img.classList.remove("shown");
+      lb.classList.add("open"); document.documentElement.classList.add("locked");
+      backdrop.style.opacity = "";
+      requestAnimationFrame(() => requestAnimationFrame(() => img.classList.add("shown")));
+      if (!finePointer) {
+        let seen = false; try { seen = localStorage.getItem("rj-hint") === "1"; } catch (e) {}
+        if (!seen) {
+          setTimeout(() => hint.classList.add("show"), 500);
+          setTimeout(() => hint.classList.remove("show"), 3200);
+          try { localStorage.setItem("rj-hint", "1"); } catch (e) {}
+        }
+      } else $(".close", lb).focus({ preventScroll: true });
+    }
+    function close() {
+      lb.classList.remove("open"); img.classList.remove("shown");
+      img.style.transition = ""; img.style.transform = ""; img.style.opacity = "";
+      backdrop.style.transition = ""; backdrop.style.opacity = "";
+      document.documentElement.classList.remove("locked");
+      if (finePointer) grid.children[current]?.focus({ preventScroll: true });
+    }
+    $(".close", lb).onclick = close;
+    $(".prev", lb).onclick = () => go(-1);
+    $(".next", lb).onclick = () => go(1);
+    $(".stage", lb).addEventListener("click", (e) => { if (e.target !== img && finePointer) close(); });
+    addEventListener("keydown", (e) => {
+      if (!lb.classList.contains("open")) return;
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") go(-1);
+      if (e.key === "ArrowRight") go(1);
+    });
+
+    // Touch gestures
+    const stage = $(".stage", lb);
+    let g = null, lastTap = 0;
+    const dist = (t) => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+    const clampPan = () => {
+      const r = img.getBoundingClientRect(), bw = (r.width / z.s), bh = (r.height / z.s);
+      const mx = Math.max(0, (bw * z.s - innerWidth) / 2 + 20), my = Math.max(0, (bh * z.s - innerHeight) / 2 + 20);
+      z.x = Math.max(-mx, Math.min(mx, z.x)); z.y = Math.max(-my, Math.min(my, z.y));
+    };
+    stage.addEventListener("touchstart", (e) => {
+      if (busy) return;
+      const t = e.touches;
+      if (t.length === 2) {
+        g = { mode: "pinch", d0: dist(t), s0: z.s };
+        return;
+      }
+      const now = Date.now(), x = t[0].clientX, y = t[0].clientY;
+      if (now - lastTap < 280 && g && Math.hypot(x - g.x0, y - g.y0) < 30) { // double tap
+        lastTap = 0;
+        if (z.s > 1) resetZoom(true);
+        else { z.s = 2.5; z.x = (innerWidth / 2 - x) * 1.5; z.y = (innerHeight / 2 - y) * 1.5; clampPan(); setT(z.x, z.y, z.s, true); }
+        g = null; return;
+      }
+      lastTap = now;
+      g = { mode: null, x0: x, y0: y, t0: now, zx: z.x, zy: z.y };
+    }, { passive: true });
+
+    stage.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+      if (!g || busy) return;
+      const t = e.touches;
+      if (g.mode === "pinch" && t.length === 2) {
+        z.s = Math.max(1, Math.min(4, g.s0 * dist(t) / g.d0));
+        setT(z.x, z.y, z.s, false); return;
+      }
+      if (t.length !== 1) return;
+      const dx = t[0].clientX - g.x0, dy = t[0].clientY - g.y0;
+      if (z.s > 1) { z.x = g.zx + dx; z.y = g.zy + dy; setT(z.x, z.y, z.s, false); return; }
+      if (!g.mode) {
+        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+        g.mode = Math.abs(dx) > Math.abs(dy) ? "swipe" : dy > 0 ? "dismiss" : "none";
+        hint.classList.remove("show");
+      }
+      if (g.mode === "swipe") {
+        setT(dx, 0, 1 - Math.min(Math.abs(dx) / innerWidth, 1) * .08, false);
+        img.style.opacity = 1 - Math.min(Math.abs(dx) / innerWidth, 1) * .5;
+      } else if (g.mode === "dismiss") {
+        const p = Math.min(dy / 400, 1);
+        setT(dx * .4, dy, 1 - p * .25, false);
+        backdrop.style.transition = "none"; backdrop.style.opacity = 1 - p * .9;
+      }
+    }, { passive: false });
+
+    stage.addEventListener("touchend", (e) => {
+      if (!g) return;
+      if (g.mode === "pinch") {
+        if (e.touches.length) return;
+        if (z.s < 1.1) resetZoom(true); else { clampPan(); setT(z.x, z.y, z.s, true); }
+        g = null; return;
+      }
+      if (z.s > 1) { clampPan(); setT(z.x, z.y, z.s, true); return; }
+      const t = e.changedTouches[0], dx = t.clientX - g.x0, dy = t.clientY - g.y0;
+      const v = Math.abs(dx) / Math.max(1, Date.now() - g.t0);
+      if (g.mode === "swipe") {
+        if (Math.abs(dx) > 70 || v > .45) go(dx < 0 ? 1 : -1);
+        else { setT(0, 0, 1, true); img.style.opacity = "1"; }
+      } else if (g.mode === "dismiss") {
+        if (dy > 110 || dy / Math.max(1, Date.now() - g.t0) > .5) {
+          img.style.transition = "transform .35s ease-in, opacity .35s";
+          img.style.transform = `translate3d(0, ${innerHeight * .6}px, 0) scale(.7)`; img.style.opacity = "0";
+          backdrop.style.transition = "opacity .35s"; backdrop.style.opacity = "0";
+          setTimeout(close, 300);
+        } else {
+          setT(0, 0, 1, true);
+          backdrop.style.transition = "opacity .3s"; backdrop.style.opacity = "1";
+        }
+      }
+      g.mode = null;
+    });
+  </script>
+</body>
+</html>
